@@ -1,0 +1,4 @@
+Esto es un fichero de texto
+Para probar la lectura sincrona 
+Y posteriormente la lectura asincrona 
+a partir del módulo fs
