@@ -16,9 +16,17 @@ const server = http.createServer((req, res) => {
     if(path == '/') {
         filename = 'tienda.html';
         contentType = 'text/html';
-    } else if (path == '/tienda.css') {
-        filename = 'tienda.css';
-        contentType = 'text/css';
+    } else {
+        if (path == '/tienda.css') {
+            filename = 'tienda.css';
+            contentType = 'text/css'; 
+        } else if (path == '/error.css'){
+            filename = 'error.css';
+            contentType = 'text/css';
+        }else {
+            filename = 'error.html';
+            contentType = 'text/html'; 
+        }
     }
     // Extrayendo la ruta del archivo pedido
     if (path != '/favicon.ico') {
