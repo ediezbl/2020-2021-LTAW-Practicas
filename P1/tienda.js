@@ -6,42 +6,37 @@ const fs = require('fs');
 // Definiendo el puerto 
 const port = 9000;
 
-// Variables
-let filename = "";
-let contentType = "";
-
-// Funciones 
-function checkFile(name) {
-    // Hace un check del nombre del archivo
-    // Cambia el nombre cuando es necesario
-    switch(name) {
-        case 'tienda.css':
-            filename = 'tienda.css';
-            contentType = 'text/css';
-            break;
-        case 'error.css':
-            filename = 'error.css';
-            contentType = 'text/css';
-            break;
-        default:
-            filename = 'error.html';
-            contentType = 'text/html';
-            break;
-    }
-}
-function checkPath(path) {
-    // Esto es una funcion que comprueba el path
-    // En funcion del path, cambiara el nombre del archivo 
+// Iniciando el servidor 
+const server = http.createServer((req, res) => {
+    // Variables
+    let filename = "";
+    let contentType = "";
+    // Formando la URL
+    const url = new URL(req.url, 'http://' + req.headers['host']);
+    path = url.pathname;
+    console.log(path);
+    // Comprobar el path 
     if(path == '/') {
         filename = 'tienda.html';
         contentType = 'text/html';
     } else {
         filename = path.split('/')[1];
-        checkFile(filename);
+        switch(filename) {
+            case 'tienda.css':
+                contentType= 'text/css';
+                break;
+            case 'error.css':
+                contentType = 'text/css';
+                break;
+            case 'logo-f1.JPG':
+                contentType = 'image/jpg';
+                break;
+            default:
+                filename = 'error.html';
+                contentType = 'text/html';
+                break;
+        }
     }
-}
-
-function writeResponse(path, res) {
     if (path != '/favicon.ico') {
         // Si el path es distinto de favicon.ico 
         // entonces puedo empezar la lectura de archivos.
@@ -50,23 +45,13 @@ function writeResponse(path, res) {
                 console.log("Error!!");
                 console.log(err.message);
             } else { // no hay error, se produce la lectura normal
+                console.log(contentType);
+                console.log(filename)
                 res.writeHead(200, {'Content-Type': contentType});
-                res.write(data);
-                res.end();
+                res.end(data);
             }
         });
     }
-}
-// Iniciando el servidor 
-const server = http.createServer((req, res) => {
-    // Formando la URL
-    const url = new URL(req.url, 'http://' + req.headers['host']);
-    path = url.pathname;
-    console.log(path);
-    // Llamar a check path
-    checkPath(path);
-    // Lamar a write response 
-    writeResponse(path, res);
 });
 
 server.listen(port);
