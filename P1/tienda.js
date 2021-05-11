@@ -2,17 +2,19 @@
 // Importando los modulos 
 const http = require('http');
 const fs = require('fs');
+
+// Definiendo el puerto 
 const port = 9000;
 
-// Iniciando el servidor 
-const server = http.createServer((req, res) => {
-    // Formando la URL
-    const url = new URL(req.url, 'http://' + req.headers['host']);
-    path = url.pathname;
-    console.log(path);
-    let filename = "";
-    let contentType = "";
-    // Colocando el nombre del archivo y su contentType
+// Variables
+let filename = "";
+let contentType = "";
+
+// Funciones 
+function checkPath(path) {
+    // Esto es una funcion que comprueba el path
+    // En funcion del path, cambiara el nombre del archivo 
+    // y el tipo de contenido, y posiblemente el codigo de respuesta.
     if(path == '/') {
         filename = 'tienda.html';
         contentType = 'text/html';
@@ -23,12 +25,14 @@ const server = http.createServer((req, res) => {
         } else if (path == '/error.css'){
             filename = 'error.css';
             contentType = 'text/css';
-        }else {
+        } else {
             filename = 'error.html';
             contentType = 'text/html'; 
         }
     }
-    // Extrayendo la ruta del archivo pedido
+}
+
+function writeResponse(path, res) {
     if (path != '/favicon.ico') {
         // Si el path es distinto de favicon.ico 
         // entonces puedo empezar la lectura de archivos.
@@ -43,6 +47,17 @@ const server = http.createServer((req, res) => {
             }
         });
     }
+}
+// Iniciando el servidor 
+const server = http.createServer((req, res) => {
+    // Formando la URL
+    const url = new URL(req.url, 'http://' + req.headers['host']);
+    path = url.pathname;
+    console.log(path);
+    // Llamar a check path
+    checkPath(path);
+    // Lamar a write response 
+    writeResponse(path, res);
 });
 
 server.listen(port);
