@@ -11,24 +11,33 @@ let filename = "";
 let contentType = "";
 
 // Funciones 
+function checkFile(name) {
+    // Hace un check del nombre del archivo
+    // Cambia el nombre cuando es necesario
+    switch(name) {
+        case 'tienda.css':
+            filename = 'tienda.css';
+            contentType = 'text/css';
+            break;
+        case 'error.css':
+            filename = 'error.css';
+            contentType = 'text/css';
+            break;
+        default:
+            filename = 'error.html';
+            contentType = 'text/html';
+            break;
+    }
+}
 function checkPath(path) {
     // Esto es una funcion que comprueba el path
     // En funcion del path, cambiara el nombre del archivo 
-    // y el tipo de contenido, y posiblemente el codigo de respuesta.
     if(path == '/') {
         filename = 'tienda.html';
         contentType = 'text/html';
     } else {
-        if (path == '/tienda.css') {
-            filename = 'tienda.css';
-            contentType = 'text/css'; 
-        } else if (path == '/error.css'){
-            filename = 'error.css';
-            contentType = 'text/css';
-        } else {
-            filename = 'error.html';
-            contentType = 'text/html'; 
-        }
+        filename = path.split('/')[1];
+        checkFile(filename);
     }
 }
 
