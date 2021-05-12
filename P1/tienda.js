@@ -31,6 +31,15 @@ const server = http.createServer((req, res) => {
             case 'logo-f1.JPG':
                 contentType = 'image/jpg';
                 break;
+            case 'circuito1.JPG':
+                contentType = 'image/jpg';
+                break;
+            case 'circuito2.JPG':
+                contentType = 'image/jpg';
+                break;
+            case 'circuito3.JPG':
+                contentType = 'image/jpg';
+                break;
             default:
                 filename = 'error.html';
                 contentType = 'text/html';
