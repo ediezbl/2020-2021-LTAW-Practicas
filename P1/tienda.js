@@ -22,24 +22,18 @@ const server = http.createServer((req, res) => {
     } else {
         filename = path.split('/')[1];
         switch(filename) {
+            case 'barcelona.html':
+                contentType = 'text/html';
+                break;
             case 'tienda.css':
+            case 'error.css':
+            case 'barcelona.css':
                 contentType= 'text/css';
                 break;
-            case 'error.css':
-                contentType = 'text/css';
-                break;
             case 'logo-f1.JPG':
-                contentType = 'image/jpg';
-                break;
             case 'circuito1.JPG':
-                contentType = 'image/jpg';
-                break;
             case 'circuito2.JPG':
-                contentType = 'image/jpg';
-                break;
             case 'circuito3.JPG':
-                contentType = 'image/jpg';
-                break;
             case 'meme.JPG':
                 contentType = 'image/jpg';
                 break;
