@@ -40,7 +40,7 @@ const server = http.createServer((req, res) => {
     if (path != '/favicon.ico') {
         // Si el path es distinto de favicon.ico 
         // entonces puedo empezar la lectura de archivos.
-        fs.readFile(filename, 'utf8', (err, data) => {
+        fs.readFile(filename, (err, data) => {
             if (err) { // Si ha ocurrido algun error como por ejemplo el fichero no existe
                 console.log("Error!!");
                 console.log(err.message);
