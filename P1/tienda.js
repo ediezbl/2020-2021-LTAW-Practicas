@@ -40,6 +40,9 @@ const server = http.createServer((req, res) => {
             case 'circuito3.JPG':
                 contentType = 'image/jpg';
                 break;
+            case 'meme.JPG':
+                contentType = 'image/jpg';
+                break;
             default:
                 filename = 'error.html';
                 contentType = 'text/html';
