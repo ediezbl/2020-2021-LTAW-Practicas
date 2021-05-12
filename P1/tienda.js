@@ -23,11 +23,14 @@ const server = http.createServer((req, res) => {
         filename = path.split('/')[1];
         switch(filename) {
             case 'barcelona.html':
+            case 'monza.html':
+            case 'tienda.html':
                 contentType = 'text/html';
                 break;
             case 'tienda.css':
             case 'error.css':
             case 'barcelona.css':
+            case 'monza.css':
                 contentType= 'text/css';
                 break;
             case 'logo-f1.JPG':
