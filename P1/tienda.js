@@ -24,6 +24,7 @@ const server = http.createServer((req, res) => {
         switch(filename) {
             case 'barcelona.html':
             case 'monza.html':
+            case 'monaco.html':
             case 'tienda.html':
                 contentType = 'text/html';
                 break;
@@ -31,6 +32,7 @@ const server = http.createServer((req, res) => {
             case 'error.css':
             case 'barcelona.css':
             case 'monza.css':
+            case 'monaco.css':
                 contentType= 'text/css';
                 break;
             case 'logo-f1.JPG':
