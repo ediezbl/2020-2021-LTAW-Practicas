@@ -11,6 +11,7 @@ const server = http.createServer((req, res) => {
     // Variables
     let filename = "";
     let contentType = "";
+    let resCode = 200;
     // Formando la URL
     const url = new URL(req.url, 'http://' + req.headers['host']);
     path = url.pathname;
@@ -45,6 +46,7 @@ const server = http.createServer((req, res) => {
             default:
                 filename = 'error.html';
                 contentType = 'text/html';
+                resCode = 404;
                 break;
         }
     }
@@ -58,7 +60,7 @@ const server = http.createServer((req, res) => {
             } else { // no hay error, se produce la lectura normal
                 console.log(contentType);
                 console.log(filename)
-                res.writeHead(200, {'Content-Type': contentType});
+                res.writeHead(resCode, {'Content-Type': contentType});
                 res.end(data);
             }
         });
