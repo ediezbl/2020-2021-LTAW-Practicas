@@ -2,10 +2,6 @@ body {
     background-color: red;
 }
 
-.logo{
-    text-align: center;
-  }
-
 .circuitos{
     width: 300px;
     height: 150px;
@@ -37,6 +33,15 @@ body {
     position: absolute;
     top: 65%;
     left: 78%;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+  }
+  #boton4 {
+    position: absolute;
+    top: 10%;
+    left: 90%;
     color: #ffffff;
     background-color: #1883ba;
     border-radius: 6px;

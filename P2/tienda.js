@@ -29,6 +29,10 @@ const server = http.createServer((req, res) => {
             case 'tienda.html':
                 contentType = 'text/html';
                 break;
+            case 'form.html':
+                contentType = 'text/html';
+                break;
+                // aqui sigue el codigo despues de momento estoy probando cosas.
             case 'tienda.css':
             case 'error.css':
             case 'barcelona.css':
