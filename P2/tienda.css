@@ -38,12 +38,9 @@ body {
     border-radius: 6px;
     border: 2px solid #0016b0;
   }
-  #boton4 {
+  #login{
     position: absolute;
     top: 10%;
     left: 90%;
-    color: #ffffff;
-    background-color: #1883ba;
-    border-radius: 6px;
-    border: 2px solid #0016b0;
+    color: blue;
   }
