@@ -1,0 +1,32 @@
+body {
+    background-color: red;
+}
+
+.logo {
+    text-align: center;
+}
+
+#imagen1 {
+    text-align: center;
+    width: 480px;
+    height: 250px;
+    padding: 10px;
+    margin-left: 20%;
+}
+
+#boton1 {
+    position: absolute;
+    top: 70%;
+    left: 46%;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+  }
+  
+  p {
+    color: yellowgreen;
+    font-size: 189%;
+    margin-left: 10%;
+    margin-right: 10%;
+}

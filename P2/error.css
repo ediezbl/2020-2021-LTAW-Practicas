@@ -1,0 +1,30 @@
+body {
+    background-color: red;
+}
+
+h1 {
+    color: yellowgreen;
+    text-align: center;
+}
+
+.logo {
+    text-align: center;
+}
+
+#imagen1 {
+    text-align: center;
+    width: 400px;
+    height: 300px;
+    padding: 10px;
+    margin-left: 35%;
+}
+
+#boton1 {
+    position: absolute;
+    top: 90%;
+    left: 46%;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+  }
