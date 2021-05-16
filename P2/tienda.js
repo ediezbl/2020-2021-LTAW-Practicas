@@ -8,8 +8,7 @@ const port = 9000;
 
 // Base de datos de la tienda 
 const FICHERO_JSON = 'tienda.json';
-const tienda_json = fs.readFileSync(FICHERO_JSON);
-const tienda = JSON.parse(tienda_json);
+
 // Iniciando el servidor 
 const server = http.createServer((req, res) => {
     // Variables
@@ -18,10 +17,17 @@ const server = http.createServer((req, res) => {
     let resCode = 200;
     let content = "";
     let user = "";
+    let direccion = "";
+    let tarjeta = 0;
+    //  Leyendo la base de datos de la tienda  
+    const FICHERO_JSON = 'tienda.json';
+    const tienda_json = fs.readFileSync(FICHERO_JSON);
+    const tienda = JSON.parse(tienda_json);
     // Formando la URL
     const url = new URL(req.url, 'http://' + req.headers['host']);
     path = url.pathname;
-    console.log(path);
+    
+    // Obteniendo los parametrod fr la url
     let name = url.searchParams.get('nombre');
     // Comprobar el path 
     if(path == '/') {
@@ -34,11 +40,11 @@ const server = http.createServer((req, res) => {
             case 'monza.html':
             case 'monaco.html':
             case 'login.html':
+            case 'formCompra.html':
                 contentType = 'text/html';
                 break;
             case 'tienda.html':
                 contentType = 'text/html';
-                console.log(name)
                 tienda[1].usuarios.forEach((element) => {
                     if (element["username"] == name) {
                         file = 'tienda.html';
@@ -46,6 +52,20 @@ const server = http.createServer((req, res) => {
                         user = name;
                     }
                 });
+                direccion = url.searchParams.get('direccion');
+                tarjeta = url.searchParams.get('tarjeta');
+                if (direccion) {
+                    // Si la direccion no es una cadena nula 
+                    // Escribir en el fichero JSON los datos enviados desde el formulario
+                    tienda[2]["direccion"] = direccion;
+                    tienda[2]["tarjeta"] = Number(tarjeta);
+                    // Esta linea cambiara, los productos los cogere desde el carrito, pero de momento 
+                    // y para probar es una buena opcion
+                    tienda[2]["productos"] = ["Barcelona"];
+                     // Escribiendo en el fihero JSON
+                     let myJSON = JSON.stringify(tienda);
+                     fs.writeFileSync(FICHERO_JSON, myJSON);
+                } 
                 break;
             case 'tienda.css':
             case 'error.css':
@@ -83,9 +103,13 @@ const server = http.createServer((req, res) => {
                 if (filename == "tienda.html" && user) {
                     data = content.replace('Login', user); 
                     data = data.replace("login.html", "");
+                    console.log(user);
+                    tienda[2]["username"] = user;
+                    // Escribiendo en el fihero JSON
+                    let myJSON = JSON.stringify(tienda);
+                    fs.writeFileSync(FICHERO_JSON, myJSON);
                 }
-                console.log(contentType);
-                console.log(filename);
+
                 res.writeHead(resCode, {'Content-Type': contentType});
                 res.end(data);
             }
