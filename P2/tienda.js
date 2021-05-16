@@ -9,6 +9,31 @@ const port = 9000;
 // Base de datos de la tienda 
 const FICHERO_JSON = 'tienda.json';
 
+// Funcion para obtener la cookie del usuario 
+function get_user(req) {
+    // Leer la cookie recibida 
+    const cookie = req.headers.cookie;
+    // Hay cookie 
+    if (cookie) {
+        // obtener un array con todos los pares nombre-valor
+        let pares = cookie.split(";");
+        // Variable para guardar el usuario 
+        let user;
+        // Recorrer todos los pares nombre-valor
+        pares.forEach((element, index) => {
+            // Obtener los nombre y valores por separado 
+            let [nombre, valor] = element.split('=');
+            // Leer el usuario 
+            // Solo si el nombre es user 
+            if (nombre.trim() === 'user') {
+                user = valor;
+            }
+        });
+        // Si la variable no esta asignada
+        // se devuelve null 
+        return user || null;
+    }
+}
 // Iniciando el servidor 
 const server = http.createServer((req, res) => {
     // Variables
@@ -16,7 +41,7 @@ const server = http.createServer((req, res) => {
     let contentType = "";
     let resCode = 200;
     let content = "";
-    let user = "";
+    let user = get_user(req);
     let direccion = "";
     let tarjeta = 0;
     //  Leyendo la base de datos de la tienda  
@@ -50,6 +75,7 @@ const server = http.createServer((req, res) => {
                         file = 'tienda.html';
                         content = fs.readFileSync(file, 'utf-8');
                         user = name;
+                        res.setHeader('Set-Cookie', 'user=' + name);
                     }
                 });
                 direccion = url.searchParams.get('direccion');
