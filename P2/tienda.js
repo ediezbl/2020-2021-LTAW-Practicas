@@ -41,7 +41,9 @@ const server = http.createServer((req, res) => {
     let contentType = "";
     let resCode = 200;
     let content = "";
-    let user = get_user(req);
+    let user = "";
+    let user_name = "";
+    let html_extra = "";
     let direccion = "";
     let tarjeta = 0;
     //  Leyendo la base de datos de la tienda  
@@ -62,8 +64,17 @@ const server = http.createServer((req, res) => {
         filename = path.split('/')[1];
         switch(filename) {
             case 'barcelona.html':
+                contentType = 'text/html';
+                content = fs.readFileSync('barcelona.html', 'utf-8');
+                break;
             case 'monza.html':
+                contentType = 'text/html';
+                content = fs.readFileSync('monza.html', 'utf-8');
+                break;
             case 'monaco.html':
+                contentType = 'text/html';
+                content = fs.readFileSync('monaco.html', 'utf-8');
+                break;
             case 'login.html':
             case 'formCompra.html':
                 contentType = 'text/html';
@@ -74,8 +85,8 @@ const server = http.createServer((req, res) => {
                     if (element["username"] == name) {
                         file = 'tienda.html';
                         content = fs.readFileSync(file, 'utf-8');
-                        user = name;
                         res.setHeader('Set-Cookie', 'user=' + name);
+                        user = name;
                     }
                 });
                 direccion = url.searchParams.get('direccion');
@@ -137,7 +148,18 @@ const server = http.createServer((req, res) => {
                     let myJSON = JSON.stringify(tienda);
                     fs.writeFileSync(FICHERO_JSON, myJSON);
                 }
-
+                if (filename == 'barcelona.html') {
+                    html_extra = tienda[0]["productos"][0]["descripcion"];
+                    data = content.replace('HTML_EXTRA', html_extra);
+                }
+                if (filename == 'monza.html') {
+                    html_extra = tienda[0]["productos"][1]["descripcion"];
+                    data = content.replace('HTML_EXTRA', html_extra);
+                }
+                if (filename == 'monaco.html') {
+                    html_extra = tienda[0]["productos"][2]["descripcion"];
+                    data = content.replace('HTML_EXTRA', html_extra);
+                }
                 res.writeHead(resCode, {'Content-Type': contentType});
                 res.end(data);
             }
