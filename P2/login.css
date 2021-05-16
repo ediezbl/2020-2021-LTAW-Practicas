@@ -1,0 +1,25 @@
+body {
+    background-color: red;
+}
+
+#username {
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    color: yellowgreen;
+    font-size: 189%;
+}
+
+#Bienvenida {
+    text-align: center;
+    color: yellowgreen;
+    font-size: 189%;
+}
+
+#barra {
+    position: absolute;
+    top: 50%;
+    left: 43%;
+    color: #ffffff;
+    background-color: yellowgreen;
+}

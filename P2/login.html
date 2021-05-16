@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
     <title>Formulario</title>
 </head>
 <body>
-    <form action="/tienda.html" method="get">
-        Nombre:
-        <input type="text" name="nombre"/>
-        <p></p>
-        <input type="submit" value="Enviar"/>
-    </form>
+    <div>
+        <img src="logo-f1.JPG" alt="Logo F1" width="300">
+    </div>
+    <div>
+        <h1 id= "Bienvenida">Inicia sesion para comprar tus entradas</h1>
+    </div>
+    <div>
+        <form action="/tienda.html" method="get">
+            <p id="username">Nombre:</p>
+            <input type="text" name="nombre" id="barra"/>
+            <p></p>
+            <input type="submit" value="Enviar" id="boton"/>
+        </form>
+    </div>
 </body>
 </html>
