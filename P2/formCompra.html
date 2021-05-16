@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="form.css">
     <title>Formulario</title>
 </head>
 <body>
+    <div>
+        <img src="logo-f1.JPG" alt="Logo F1" width="300">
+    </div>
+    <div>
+        <h1 id= "formulario">Rellena con tus datos para formalizar tu compra</h1>
+    </div>
     <form action="/tienda.html" method="get">
-        Direccion:
-        <input type="text" name="direccion"/>
+        <p id="direccion">Direccion:</p>
+        <input type="text" name="direccion" id="barra1"/>
         <p></p>
-        Tarjeta:
-        <input type="text" name="tarjeta"/>
+        <p id="tarjeta">Tarjeta: </p>
+        <input type="text" name="tarjeta" id="barra2"/>
         <p></p>
-        <input type="submit" value="Enviar"/>
+        <input type="submit" value="Enviar" id="boton"/>
     </form>
 </body>
 </html>

@@ -1,8 +1,14 @@
+
 body {
     background-color: red;
 }
 
-#username {
+#formulario {
+    text-align: center;
+    color: yellowgreen;
+}
+
+#direccion {
     position: absolute;
     top: 40%;
     left: 45%;
@@ -10,13 +16,7 @@ body {
     font-size: 189%;
 }
 
-#Bienvenida {
-    text-align: center;
-    color: yellowgreen;
-    font-size: 189%;
-}
-
-#barra {
+#barra1 {
     position: absolute;
     top: 50%;
     left: 43%;
@@ -24,9 +24,25 @@ body {
     background-color: yellowgreen;
 }
 
+#tarjeta {
+    position: absolute;
+    top: 50%;
+    left: 46%;
+    color: yellowgreen;
+    font-size: 189%;
+}
+
+#barra2 {
+    position: absolute;
+    top: 60%;
+    left: 43%;
+    color: #ffffff;
+    background-color: yellowgreen;
+}
+
 #boton {
     position: absolute;
-    top: 55%;
+    top: 65%;
     left: 52%;
     color: #ffffff;
     background-color: #1883ba;

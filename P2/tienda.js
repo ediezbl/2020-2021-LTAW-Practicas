@@ -72,6 +72,8 @@ const server = http.createServer((req, res) => {
             case 'barcelona.css':
             case 'monza.css':
             case 'monaco.css':
+            case 'login.css':
+            case 'form.css':
                 contentType = 'text/css';
                 break;
             case 'logo-f1.JPG':
