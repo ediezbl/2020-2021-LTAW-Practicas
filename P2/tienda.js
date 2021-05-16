@@ -33,7 +33,7 @@ const server = http.createServer((req, res) => {
             case 'barcelona.html':
             case 'monza.html':
             case 'monaco.html':
-            case 'form.html':
+            case 'login.html':
                 contentType = 'text/html';
                 break;
             case 'tienda.html':
@@ -61,6 +61,10 @@ const server = http.createServer((req, res) => {
             case 'meme.JPG':
                 contentType = 'image/jpg';
                 break;
+            case 'login':
+                filename = 'login.html';
+                contentType = 'text/html';
+                break;
             default:
                 filename = 'error.html';
                 contentType = 'text/html';
@@ -78,7 +82,7 @@ const server = http.createServer((req, res) => {
             } else { // no hay error, se produce la lectura normal
                 if (filename == "tienda.html" && user) {
                     data = content.replace('Login', user); 
-                    data = data.replace("/form.html", "");
+                    data = data.replace("login.html", "");
                 }
                 console.log(contentType);
                 console.log(filename);
