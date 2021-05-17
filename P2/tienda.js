@@ -42,10 +42,10 @@ const server = http.createServer((req, res) => {
     let resCode = 200;
     let content = "";
     let user = "";
-    let user_name = "";
     let html_extra = "";
     let direccion = "";
     let tarjeta = 0;
+    let user_name = get_user(req);
     //  Leyendo la base de datos de la tienda  
     const FICHERO_JSON = 'tienda.json';
     const tienda_json = fs.readFileSync(FICHERO_JSON);
@@ -81,6 +81,7 @@ const server = http.createServer((req, res) => {
                 break;
             case 'tienda.html':
                 contentType = 'text/html';
+                filename = 'tienda.html';
                 tienda[1].usuarios.forEach((element) => {
                     if (element["username"] == name) {
                         file = 'tienda.html';
@@ -139,14 +140,16 @@ const server = http.createServer((req, res) => {
                 console.log("Error!!");
                 console.log(err.message);
             } else { // no hay error, se produce la lectura normal
-                if (filename == "tienda.html" && user) {
-                    data = content.replace('Login', user); 
-                    data = data.replace("login.html", "");
-                    console.log(user);
-                    tienda[2]["username"] = user;
-                    // Escribiendo en el fihero JSON
-                    let myJSON = JSON.stringify(tienda);
-                    fs.writeFileSync(FICHERO_JSON, myJSON);
+                if (filename == 'tienda.html') {
+                    if (user_name) {
+                        content = fs.readFileSync('tienda.html', 'utf-8');
+                        data = content.replace('Login', user_name);
+                        data = data.replace('Login', ''); 
+                        tienda[2]["username"] = user_name;
+                        // Escribiendo en el fihero JSON
+                        let myJSON = JSON.stringify(tienda);
+                        fs.writeFileSync(FICHERO_JSON, myJSON);
+                    }
                 }
                 if (filename == 'barcelona.html') {
                     html_extra = tienda[0]["productos"][0]["descripcion"];
