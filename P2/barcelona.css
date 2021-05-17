@@ -30,3 +30,13 @@ body {
     margin-left: 10%;
     margin-right: 10%;
 }
+
+#carrito {
+    position: absolute;
+    top: 70%;
+    left: 60%;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+}

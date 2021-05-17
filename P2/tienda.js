@@ -34,6 +34,29 @@ function get_user(req) {
         return user || null;
     }
 }
+
+function get_productos(req) {
+    // Leer la cookie recibida 
+    const cookie = req.headers.cookie;
+    // Hay cookie 
+    if (cookie) {
+         // obtener un array con todos los pares nombre-valor
+         let pares = cookie.split(";");
+         // Variable para guardar los productos, en este caso es una lista de productos  
+         let products = [];
+        // Recorrer todos los pares nombre-valor
+        pares.forEach((element, index) => {
+            // Obtener los nombre y valores por separado 
+            let [nombre, valor] = element.split('=');
+            // Leer el usuario 
+            // Solo si el nombre es user 
+            if (nombre.trim() === 'carrito') {
+                products.push(valor);
+            }
+        });
+        return products;
+    }
+}
 // Iniciando el servidor 
 const server = http.createServer((req, res) => {
     // Variables
@@ -45,6 +68,7 @@ const server = http.createServer((req, res) => {
     let direccion = "";
     let tarjeta = 0;
     let user_name = "";
+    //let products = get_productos(req);
     //  Leyendo la base de datos de la tienda  
     const FICHERO_JSON = 'tienda.json';
     const tienda_json = fs.readFileSync(FICHERO_JSON);
@@ -61,6 +85,16 @@ const server = http.createServer((req, res) => {
     } else {
         filename = path.split('/')[1];
         switch(filename) {
+            case 'barcelona':
+                contentType = 'text/html';
+                filename = 'barcelona.html'
+                content = fs.readFileSync(filename, 'utf-8');
+                // Solo se añade la cookie del carrito si el usuario esta logeado
+                let user = get_user(req);
+                if (user) {
+                    res.setHeader('Set-Cookie', 'carrito=Barcelona');
+                }
+                break;
             case 'barcelona.html':
                 contentType = 'text/html';
                 content = fs.readFileSync('barcelona.html', 'utf-8');
