@@ -41,11 +41,10 @@ const server = http.createServer((req, res) => {
     let contentType = "";
     let resCode = 200;
     let content = "";
-    let user = "";
     let html_extra = "";
     let direccion = "";
     let tarjeta = 0;
-    let user_name = get_user(req);
+    let user_name = "";
     //  Leyendo la base de datos de la tienda  
     const FICHERO_JSON = 'tienda.json';
     const tienda_json = fs.readFileSync(FICHERO_JSON);
@@ -59,7 +58,6 @@ const server = http.createServer((req, res) => {
     // Comprobar el path 
     if(path == '/') {
         filename = 'tienda.html';
-        contentType = 'text/html';
     } else {
         filename = path.split('/')[1];
         switch(filename) {
@@ -84,10 +82,10 @@ const server = http.createServer((req, res) => {
                 filename = 'tienda.html';
                 tienda[1].usuarios.forEach((element) => {
                     if (element["username"] == name) {
-                        file = 'tienda.html';
-                        content = fs.readFileSync(file, 'utf-8');
+                        file = 'tienda.html'
+                        content = fs.readFileSync('tienda.html', 'utf-8');
                         res.setHeader('Set-Cookie', 'user=' + name);
-                        user = name;
+                        user_name = name;
                     }
                 });
                 direccion = url.searchParams.get('direccion');
@@ -122,8 +120,8 @@ const server = http.createServer((req, res) => {
                 contentType = 'image/jpg';
                 break;
             case 'login':
-                filename = 'login.html';
                 contentType = 'text/html';
+                filename = 'login.html';
                 break;
             default:
                 filename = 'error.html';
@@ -141,15 +139,24 @@ const server = http.createServer((req, res) => {
                 console.log(err.message);
             } else { // no hay error, se produce la lectura normal
                 if (filename == 'tienda.html') {
-                    if (user_name) {
+                    let user = get_user(req);
+                    if (user) {
+                        // Si ha encontrado el usuario, es decir, existia el campo con la cookie
+                        console.log(user);
                         content = fs.readFileSync('tienda.html', 'utf-8');
-                        data = content.replace('Login', user_name);
-                        data = data.replace('Login', ''); 
-                        tienda[2]["username"] = user_name;
+                        data = content.replace('Login', user);
+                        data = data.replace('/login', '');
+                        tienda[2]["username"] = user;
                         // Escribiendo en el fihero JSON
                         let myJSON = JSON.stringify(tienda);
                         fs.writeFileSync(FICHERO_JSON, myJSON);
-                    }
+                    } else {
+                        // Si no ha encontrado el campo con la cookie 
+                        if (user_name) {
+                            data = content.replace('Login', user_name);
+                            data = data.replace('/login', ''); 
+                        }
+                    } 
                 }
                 if (filename == 'barcelona.html') {
                     html_extra = tienda[0]["productos"][0]["descripcion"];
