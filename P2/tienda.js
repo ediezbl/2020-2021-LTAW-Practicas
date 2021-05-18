@@ -5,7 +5,7 @@ const fs = require('fs');
 
 // Definiendo el puerto 
 const port = 9000;
-
+let carrito = "";
 // Base de datos de la tienda 
 const FICHERO_JSON = 'tienda.json';
 
@@ -51,7 +51,9 @@ function get_productos(req) {
             // Leer el usuario 
             // Solo si el nombre es user 
             if (nombre.trim() === 'carrito') {
-                products.push(valor);
+                valor.split(":").forEach((element) => {
+                    products.push(element);
+                });
             }
         });
         return products;
@@ -68,6 +70,8 @@ const server = http.createServer((req, res) => {
     let direccion = "";
     let tarjeta = 0;
     let user_name = "";
+    let productos = get_productos(req);
+    console.log(productos);
     //let products = get_productos(req);
     //  Leyendo la base de datos de la tienda  
     const FICHERO_JSON = 'tienda.json';
@@ -89,11 +93,38 @@ const server = http.createServer((req, res) => {
                 contentType = 'text/html';
                 filename = 'barcelona.html'
                 content = fs.readFileSync(filename, 'utf-8');
-                // Solo se añade la cookie del carrito si el usuario esta logeado
-                let user = get_user(req);
-                if (user) {
-                    res.setHeader('Set-Cookie', 'carrito=Barcelona');
+                if (carrito == "") {
+                    // Si la cookie del carrito esta vacia 
+                    carrito = 'carrito=Barcelona';
+                } else {
+                    carrito += ':Barcelona';
                 }
+                // Añadiendo la cookie
+                res.setHeader('Set-Cookie', carrito);
+                break;
+            case 'monza':
+                contentType = 'text/html';
+                filename = 'monza.html'
+                content = fs.readFileSync(filename, 'utf-8');
+                if (carrito == "") {
+                    carrito = 'carrito=Monza';
+                } else {
+                    carrito += ':Monza';
+                }
+                // Añadiendo la cookie
+                res.setHeader('Set-Cookie', carrito);
+                break;
+            case 'monaco':
+                contentType = 'text/html';
+                filename = 'monaco.html'
+                content = fs.readFileSync(filename, 'utf-8');
+                if (carrito == "") {
+                    carrito = 'carrito=Monaco';
+                } else {
+                    carrito += ':Monaco';
+                }
+                // Añadiendo la cookie
+                res.setHeader('Set-Cookie', carrito);
                 break;
             case 'barcelona.html':
                 contentType = 'text/html';
