@@ -178,6 +178,7 @@ const server = http.createServer((req, res) => {
             case 'monaco.css':
             case 'login.css':
             case 'form.css':
+            case 'confirmacionCompra.css':
                 contentType = 'text/css';
                 break;
             case 'logo-f1.JPG':

@@ -1,0 +1,17 @@
+body {
+    background-color: red;
+}
+.texto {
+    text-align: center;
+    color: yellowgreen;
+}
+
+#boton1 {
+    position: absolute;
+    top: 50%;
+    left: 46%;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+}
