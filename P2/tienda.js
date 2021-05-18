@@ -70,8 +70,6 @@ const server = http.createServer((req, res) => {
     let direccion = "";
     let tarjeta = 0;
     let user_name = "";
-    let productos = get_productos(req);
-    console.log(productos);
     //let products = get_productos(req);
     //  Leyendo la base de datos de la tienda  
     const FICHERO_JSON = 'tienda.json';
@@ -81,7 +79,7 @@ const server = http.createServer((req, res) => {
     const url = new URL(req.url, 'http://' + req.headers['host']);
     path = url.pathname;
     
-    // Obteniendo los parametrod fr la url
+    // Obteniendo los parametrod de la url
     let name = url.searchParams.get('nombre');
     // Comprobar el path 
     if(path == '/') {
@@ -138,9 +136,28 @@ const server = http.createServer((req, res) => {
                 contentType = 'text/html';
                 content = fs.readFileSync('monaco.html', 'utf-8');
                 break;
+            case 'confirmacionCompra.html':
+                contentType = 'text/html';
+                direccion = url.searchParams.get('direccion');
+                tarjeta = url.searchParams.get('tarjeta');
+                let productos = get_productos(req);
+                if (direccion) {
+                    // Si la direccion no es una cadena nula 
+                    // Escribir en el fichero JSON los datos enviados desde el formulario
+                    tienda[2]["direccion"] = direccion;
+                    tienda[2]["tarjeta"] = Number(tarjeta);
+                    // Esta linea cambiara, los productos los cogere desde el carrito, pero de momento 
+                    // y para probar es una buena opcion
+                    tienda[2]["productos"] = productos;
+                     // Escribiendo en el fihero JSON
+                     let myJSON = JSON.stringify(tienda);
+                     fs.writeFileSync(FICHERO_JSON, myJSON);
+                }
+                break;
             case 'login.html':
             case 'formCompra.html':
                 contentType = 'text/html';
+                content = fs.readFileSync('formCompra.html', 'utf-8');
                 break;
             case 'tienda.html':
                 contentType = 'text/html';
@@ -153,20 +170,6 @@ const server = http.createServer((req, res) => {
                         user_name = name;
                     }
                 });
-                direccion = url.searchParams.get('direccion');
-                tarjeta = url.searchParams.get('tarjeta');
-                if (direccion) {
-                    // Si la direccion no es una cadena nula 
-                    // Escribir en el fichero JSON los datos enviados desde el formulario
-                    tienda[2]["direccion"] = direccion;
-                    tienda[2]["tarjeta"] = Number(tarjeta);
-                    // Esta linea cambiara, los productos los cogere desde el carrito, pero de momento 
-                    // y para probar es una buena opcion
-                    tienda[2]["productos"] = ["Barcelona"];
-                     // Escribiendo en el fihero JSON
-                     let myJSON = JSON.stringify(tienda);
-                     fs.writeFileSync(FICHERO_JSON, myJSON);
-                } 
                 break;
             case 'tienda.css':
             case 'error.css':
@@ -218,8 +221,14 @@ const server = http.createServer((req, res) => {
                     } else {
                         // Si no ha encontrado el campo con la cookie 
                         if (user_name) {
+                            // Mirar si el usuario se acaba de registrar
                             data = content.replace('Login', user_name);
                             data = data.replace('/login', ''); 
+                        } else {
+                            // Si el usuario no esta registrado, o no se acaba de registrar 
+                            // no se puede acceder al formulario de compra 
+                            let content = fs.readFileSync('tienda.html', 'utf-8');
+                            data = content.replace('formCompra.html', "");
                         }
                     } 
                 }
@@ -233,6 +242,15 @@ const server = http.createServer((req, res) => {
                 }
                 if (filename == 'monaco.html') {
                     html_extra = tienda[0]["productos"][2]["descripcion"];
+                    data = content.replace('HTML_EXTRA', html_extra);
+                }
+                if (filename == 'formCompra.html') {
+                    let products = get_productos(req);
+                    if (products[0] != []) {
+                        products.forEach((element) => {
+                            html_extra += element + " ";
+                        });
+                    } 
                     data = content.replace('HTML_EXTRA', html_extra);
                 }
                 res.writeHead(resCode, {'Content-Type': contentType});
