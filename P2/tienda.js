@@ -117,6 +117,28 @@ const server = http.createServer((req, res) => {
     }else {
         filename = path.split('/')[1];
         switch(filename) {
+            case 'busqueda':
+                let parametro = url.searchParams.get('producto');
+                parametro = parametro.toUpperCase();
+                if (parametro == 'BARCELONA'){
+                    contentType = 'text/html';
+                    filename = 'barcelona.html';
+                    content = fs.readFileSync(filename, 'utf-8');
+                    break;
+                }
+                if (parametro == 'MONZA') {
+                    contentType = 'text/html';
+                    filename = 'monza.html';
+                    content = fs.readFileSync(filename, 'utf-8');
+                    break;
+                }
+                if (parametro == 'MONACO') {
+                    contentType = 'text/html';
+                    filename = 'monaco.html';
+                    content = fs.readFileSync(filename, 'utf-8');
+                    break
+                }
+                break;
             case 'tiendaAJAX.js':
                 contentType = 'application/javascript';
                 break;
@@ -187,7 +209,6 @@ const server = http.createServer((req, res) => {
                      fs.writeFileSync(FICHERO_JSON, myJSON);
                 }
                 break;
-            case 'login.html':
             case 'formCompra.html':
                 contentType = 'text/html';
                 content = fs.readFileSync('formCompra.html', 'utf-8');

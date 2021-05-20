@@ -11,7 +11,7 @@ body {
   }
   #boton1 {
     position: absolute;
-    top: 65%;
+    top: 70%;
     left: 15%;
     color: #ffffff;
     background-color: #1883ba;
@@ -21,7 +21,7 @@ body {
   
   #boton2 {
     position: absolute;
-    top: 65%;
+    top: 70%;
     left: 47%;
     color: #ffffff;
     background-color: #1883ba;
@@ -31,7 +31,7 @@ body {
   
   #boton3 {
     position: absolute;
-    top: 65%;
+    top: 70%;
     left: 78%;
     color: #ffffff;
     background-color: #1883ba;
@@ -48,4 +48,28 @@ body {
   #finalizar{
     text-align: center;
     color: blue;
+  }
+
+  #caja {
+    position: absolute;
+    top: 12%;
+    left: 43%;
+    color: #ffffff;
+    background-color: yellowgreen;
+    
+  }
+
+  #buscar {
+    position: absolute;
+    top: 12%;
+    left: 59%;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+  }
+
+  #display1{
+    text-align: center;
+    color: yellowgreen;
   }
