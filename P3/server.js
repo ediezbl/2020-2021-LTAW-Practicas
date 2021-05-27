@@ -1,6 +1,7 @@
 //-- Cargar las dependencias
 const socket = require('socket.io');
 const http = require('http');
+const fs = require('fs');
 const express = require('express');
 const colors = require('colors');
 const PUERTO = 9000;
@@ -18,7 +19,8 @@ let clients = 0;
 //-------- PUNTOS DE ENTRADA DE LA APLICACION WEB
 //-- Definir el punto de entrada principal de mi aplicación web
 app.get('/', (req, res) => {
-  res.send('Bienvenido a mi aplicación Web!!!' + '<p><a href="/chat.html">Test</a></p>');
+    const file = fs.readFileSync('./public/chat.html', 'utf-8');
+    res.send(file);
 });
 
 //-- Esto es necesario para que el servidor le envíe al cliente la
@@ -65,9 +67,10 @@ io.on('connect', (socket) => {
             let date = new Date();
             message = date.toUTCString() + "<br>";
             socket.send(message);
+            break;
         default:
             if (msg.startsWith("/")) {
-                message = "Comando no sisponible, utliza /help para ver los disponibles" + "<br>";
+                message = "Comando no disponible, utliza /help para ver los disponibles" + "<br>";
                 socket.send(message);
             } else {
                 //-- Reenviarlo a todos los clientes conectados
