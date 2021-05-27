@@ -36,6 +36,8 @@ io.on('connect', (socket) => {
   
   console.log('** NUEVA CONEXIÓN **'.yellow);
     clients += 1; // Aumenta el numero de clientes 
+    socket.send("Bienvenido/a a mi chat");
+    socket.broadcast.emit('message', 'Un nuevo usuario se ha unido al chat');
   //-- Evento de desconexión
   socket.on('disconnect', function(){
     console.log('** CONEXIÓN TERMINADA **'.yellow);
