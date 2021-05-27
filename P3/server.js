@@ -4,7 +4,6 @@ const http = require('http');
 const express = require('express');
 const colors = require('colors');
 const PUERTO = 9000;
-
 //-- Crear una nueva aplciacion web
 const app = express();
 
@@ -14,6 +13,8 @@ const server = http.Server(app);
 //-- Crear el servidor de websockets, asociado al servidor http
 const io = socket(server);
 
+// Numero de clientes activos 
+let clients = 0;
 //-------- PUNTOS DE ENTRADA DE LA APLICACION WEB
 //-- Definir el punto de entrada principal de mi aplicación web
 app.get('/', (req, res) => {
@@ -32,10 +33,11 @@ app.use(express.static('public'));
 io.on('connect', (socket) => {
   
   console.log('** NUEVA CONEXIÓN **'.yellow);
-
+    clients += 1; // Aumenta el numero de clientes 
   //-- Evento de desconexión
   socket.on('disconnect', function(){
     console.log('** CONEXIÓN TERMINADA **'.yellow);
+    clients -= 1; // Disminuye el numero de clientes 
   });  
 
   //-- Mensaje recibido: Reenviarlo a todos los clientes conectados
@@ -51,12 +53,28 @@ io.on('connect', (socket) => {
                       "/date: El servidor te dira la fecha";
             socket.send(message);
             break;
+        case '/list':
+            message = "Numero de clientes activos: " + String(clients) + "<br>";
+            socket.send(message);
+            break;
+        case '/hello':
+            message = "Hola, soy el server, disfruta mandando los mensajes, aunque recuerda siempre con respeto" + "<br>";
+            socket.send(message);
+            break;
+        case '/date':
+            let date = new Date();
+            message = date.toUTCString() + "<br>";
+            socket.send(message);
         default:
+            if (msg.startsWith("/")) {
+                message = "Comando no sisponible, utliza /help para ver los disponibles" + "<br>";
+                socket.send(message);
+            } else {
+                //-- Reenviarlo a todos los clientes conectados
+                io.send(msg);
+            }
             break;
     }
-
-    //-- Reenviarlo a todos los clientes conectados
-    io.send(msg);
   });
 
 });
