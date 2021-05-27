@@ -3,7 +3,6 @@ const socket = require('socket.io');
 const http = require('http');
 const express = require('express');
 const colors = require('colors');
-
 const PUERTO = 9000;
 
 //-- Crear una nueva aplciacion web
@@ -42,6 +41,19 @@ io.on('connect', (socket) => {
   //-- Mensaje recibido: Reenviarlo a todos los clientes conectados
   socket.on("message", (msg)=> {
     console.log("Mensaje Recibido!: " + msg.blue);
+    let message = "";
+    switch (msg) {
+        case '/help':
+            message = "Comandos que pueden servirte de ayuda:" + "<br>" + 
+                      "/help: Te mostrara los comandos disponibles" + "<br>" + 
+                      "/list: Te dira el numero de usuarios conectados" + "<br>" + 
+                      "/hello: El servidor te mandara un saludo" + "<br>" + 
+                      "/date: El servidor te dira la fecha";
+            socket.send(message);
+            break;
+        default:
+            break;
+    }
 
     //-- Reenviarlo a todos los clientes conectados
     io.send(msg);
