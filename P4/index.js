@@ -9,7 +9,11 @@ const info1 = document.getElementById("info1");
 const info2 = document.getElementById("info2");
 const info3 = document.getElementById("info3");
 const print = document.getElementById("print");
+
+// Variables 
 let  clients = document.getElementById("clients");
+let mensajes = document.getElementById("mensajes");
+
 //-- Acceder a la API de node para obtener la info
 //-- Sólo es posible si nos han dado permisos desde
 //-- el proceso princpal
@@ -31,6 +35,11 @@ btn_test.onclick = () => {
 electron.ipcRenderer.on('clients', (event, message) => {
     console.log("Recibido: " + message);
     clients.innerHTML = message;
+  });
+
+  electron.ipcRenderer.on('msg', (event, message) => {
+    console.log("Recibido: " + message);
+    mensajes.innerHTML += message + '<br>';
   });
 
 electron.ipcRenderer.on('print', (event, message) => {

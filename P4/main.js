@@ -87,6 +87,8 @@ io.on('connect', (socket) => {
                 message = "Comando no disponible, utliza /help para ver los disponibles" + "<br>";
                 socket.send(message);
             } else {
+                // Enviar el mensaje al proceso de renderizado
+                win.webContents.send('msg', msg);
                 //-- Reenviarlo a todos los clientes conectados
                 io.send(msg);
             }
