@@ -46,10 +46,14 @@ io.on('connect', (socket) => {
     clients += 1; // Aumenta el numero de clientes 
     socket.send("Bienvenido/a a mi chat");
     socket.broadcast.emit('message', 'Un nuevo usuario se ha unido al chat');
+    // Enviar el numero de clientes al proceso de renderizado 
+    win.webContents.send('clients', clients);
   //-- Evento de desconexión
   socket.on('disconnect', function(){
     console.log('** CONEXION TERMINADA **'.yellow);
     clients -= 1; // Disminuye el numero de clientes 
+    // Enviar el numero de clientes al proceso de renderizado 
+    win.webContents.send('clients', clients);
   });  
 
   //-- Mensaje recibido: Reenviarlo a todos los clientes conectados
