@@ -16,5 +16,11 @@ electron.app.on('ready', () => {
         width: 600, // Esto es la anchura 
         height: 400 // Esto es la altura 
     });
+
+    // En la parte superior se ha creado el menu 
+    // por defecto 
+    // Si lo queremos quitar hay que añadir esta linea
+    win.setMenuBarVisibility(false);
 })
+ 
 
