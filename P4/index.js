@@ -8,7 +8,7 @@ const info1 = document.getElementById("info1");
 const info2 = document.getElementById("info2");
 const info3 = document.getElementById("info3");
 const print = document.getElementById("print");
-
+const url = document.getElementById("url");
 // Variables 
 let  clients = document.getElementById("clients");
 let mensajes = document.getElementById("mensajes");
@@ -22,24 +22,20 @@ info3.textContent = process.versions.electron;
 
 
 btn_test.onclick = () => {
-
     //-- Enviar mensaje al proceso principal
     electron.ipcRenderer.invoke('test', "Mensaje enviado desde la aplicacion de escritorio");
 }
 
 //-- Mensajes recibido del proceso MAIN
 
+electron.ipcRenderer.on('url', (event, message) => {
+    url.innerHTML = message;
+  });
+
 electron.ipcRenderer.on('clients', (event, message) => {
-    console.log("Recibido: " + message);
     clients.innerHTML = message;
   });
 
   electron.ipcRenderer.on('msg', (event, message) => {
-    console.log("Recibido: " + message);
     mensajes.innerHTML += message + '<br>';
-  });
-
-electron.ipcRenderer.on('print', (event, message) => {
-    console.log("Recibido: " + message);
-    print.textContent = message;
   });

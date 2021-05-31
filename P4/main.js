@@ -6,6 +6,7 @@ const fs = require('fs');
 const express = require('express');
 const colors = require('colors');
 const electron = require('electron');
+const ip = require('ip');
 console.log("Arrancando electron...");
 
 // Constantes 
@@ -122,12 +123,9 @@ electron.app.on('ready', () => {
   //-- y luego enviar el mensaje al proceso de renderizado para que 
   //-- lo saque por la interfaz gráfica
   win.on('ready-to-show', () => {
-    win.webContents.send('print', "MENSAJE ENVIADO DESDE PROCESO MAIN");
+    let url = "http://" + ip.address() + ":" + PUERTO;
+    win.webContents.send('url', url);
   });
-
-  //-- Enviar un mensaje al proceso de renderizado para que lo saque
-  //-- por la interfaz gráfica
-  win.webContents.send('print', "MENSAJE ENVIADO DESDE PROCESO MAIN");
 
 });
 
@@ -137,6 +135,7 @@ electron.app.on('ready', () => {
 electron.ipcMain.handle('test', (event, msg) => {
   console.log("-> Mensaje: " + msg);
   // Enviando el mensaje de prueba a todos los usuarios conectados
+  win.webContents.send('msg', msg);
   io.send(msg);
 });
  
