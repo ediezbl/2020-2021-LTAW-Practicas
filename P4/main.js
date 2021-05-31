@@ -136,6 +136,8 @@ electron.app.on('ready', () => {
 //-- renderizado. Al recibirlos se escribe una cadena en la consola
 electron.ipcMain.handle('test', (event, msg) => {
   console.log("-> Mensaje: " + msg);
+  // Enviando el mensaje de prueba a todos los usuarios conectados
+  io.send(msg);
 });
  
 server.listen(PUERTO);
