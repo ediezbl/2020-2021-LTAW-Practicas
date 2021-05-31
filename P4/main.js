@@ -17,10 +17,9 @@ electron.app.on('ready', () => {
         height: 400 // Esto es la altura 
     });
 
-    // En la parte superior se ha creado el menu 
-    // por defecto 
-    // Si lo queremos quitar hay que añadir esta linea
-    win.setMenuBarVisibility(false);
+    // Cargar contenido web en la ventana 
+    // La ventana es en realidad... ¡un navegador!
+    win.loadFile("index.html");
 })
  
 
